@@ -17,8 +17,9 @@ public class IngredientDTO {
     @Column(name = "AMOUNT")
     private BigDecimal amount;
 
-//    @Column(name = "UNIT_OF_MEASURE")
-//    private UnitOfMeasure unitOfMeasure;
+    // V triede UnitOfMeasureDTO abslutne ziadnu asociaciu nedavame v tomto pripade, nechteme totiz absolutne ziadnu kaskadu medzi nimi
+    @OneToOne(fetch = FetchType.EAGER)
+    private UnitOfMeasureDTO unitOfMeasureDTO;
 
     @ManyToOne
     @JoinColumn(name = "RECIPE_ID", foreignKey = @ForeignKey(name = "FK_ingredient_RECIPE_ID"))
@@ -32,6 +33,7 @@ public class IngredientDTO {
         this.setDescription(ingredientDTOBuilder.description);
         this.setAmount(ingredientDTOBuilder.amount);
         this.setRecipeDTO(ingredientDTOBuilder.recipeDTO);
+        this.setUnitOfMeasureDTO(ingredientDTOBuilder.unitOfMeasureDTO);
     }
 
     public IngredientDTOBuilder createBuilder() {
@@ -71,6 +73,14 @@ public class IngredientDTO {
         this.recipeDTO = recipeDTO;
     }
 
+    public UnitOfMeasureDTO getUnitOfMeasureDTO() {
+        return unitOfMeasureDTO;
+    }
+
+    public void setUnitOfMeasureDTO(UnitOfMeasureDTO unitOfMeasureDTO) {
+        this.unitOfMeasureDTO = unitOfMeasureDTO;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,7 +104,7 @@ public class IngredientDTO {
 
         private BigDecimal amount;
 
-//    private UnitOfMeasure unitOfMeasure;
+         private UnitOfMeasureDTO unitOfMeasureDTO;
 
         private RecipeDTO recipeDTO;
 
@@ -113,6 +123,11 @@ public class IngredientDTO {
 
         public IngredientDTOBuilder amount(BigDecimal amount) {
             this.amount = amount;
+            return this;
+        }
+
+        public IngredientDTOBuilder unitOfMeasureDTO(UnitOfMeasureDTO unitOfMeasureDTO) {
+            this.unitOfMeasureDTO = unitOfMeasureDTO;
             return this;
         }
 
