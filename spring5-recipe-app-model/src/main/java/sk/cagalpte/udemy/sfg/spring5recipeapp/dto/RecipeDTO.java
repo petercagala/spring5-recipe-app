@@ -1,7 +1,9 @@
 package sk.cagalpte.udemy.sfg.spring5recipeapp.dto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "recipe")
@@ -46,6 +48,9 @@ public class RecipeDTO {
 
     @OneToOne(mappedBy = "recipeDTO", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private NotesDTO notesDTO;
+
+    @OneToMany(mappedBy = "recipeDTO", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<IngredientDTO> ingredientDTOS = new ArrayList<>();
 
     public RecipeDTO() {
     }
@@ -144,6 +149,14 @@ public class RecipeDTO {
 
     public void setNotesDTO(NotesDTO notesDTO) {
         this.notesDTO = notesDTO;
+    }
+
+    public List<IngredientDTO> getIngredientDTOS() {
+        return ingredientDTOS;
+    }
+
+    public void setIngredientDTOS(List<IngredientDTO> ingredientDTOS) {
+        this.ingredientDTOS = ingredientDTOS;
     }
 
     @Override
