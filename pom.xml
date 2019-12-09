@@ -6,7 +6,10 @@
 	<artifactId>spring5-recipe-app-core</artifactId>
 
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <modules>
+        <module>spring5-recipe-app-model</module>
+    </modules>
+    <packaging>pom</packaging>
 
 	<name>Spring5-recipe-app</name>
 	<description>Recipe Application</description>
