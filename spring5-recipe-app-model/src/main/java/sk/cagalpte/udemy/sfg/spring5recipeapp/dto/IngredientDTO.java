@@ -17,7 +17,7 @@ public class IngredientDTO {
     @Column(name = "AMOUNT")
     private BigDecimal amount;
 
-    // V triede UnitOfMeasureDTO abslutne ziadnu asociaciu nedavame v tomto pripade, nechteme totiz absolutne ziadnu kaskadu medzi nimi
+    // V triede UnitOfMeasureDTO abslutne ziadnu asociaciu nedavame v tomto pripade, nechceme totiz absolutne ziadnu kaskadu medzi nimi
     @OneToOne(fetch = FetchType.EAGER)
     private UnitOfMeasureDTO unitOfMeasureDTO;
 

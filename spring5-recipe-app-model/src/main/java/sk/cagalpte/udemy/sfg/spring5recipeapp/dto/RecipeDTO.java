@@ -1,5 +1,8 @@
 package sk.cagalpte.udemy.sfg.spring5recipeapp.dto;
 
+import sk.cagalpte.udemy.sfg.spring5recipeapp.enums.Difficulty;
+import sk.cagalpte.udemy.sfg.spring5recipeapp.mappers.enum_converters.DifficultyConverter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +49,11 @@ public class RecipeDTO {
 //            BLOB(Binary Large Object): In case of double byte character large data is saved in BLOB data type.
     private Byte[] images;
 
+    //@Enumerated(EnumType.ORDINAL) //1. option (cele cisla podla poradia, default)
+//    @Enumerated(EnumType.STRING) //2. option
+    @Convert(converter = DifficultyConverter.class) // 3. option (nastavenie skratiek podla jednotlivych enumov)
+    private Difficulty difficulty;
+
     @OneToOne(mappedBy = "recipeDTO", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private NotesDTO notesDTO;
 
@@ -65,6 +73,7 @@ public class RecipeDTO {
         this.setUrl(recipeDTOBuilder.url);
         this.setDirections(recipeDTOBuilder.directions);
         this.setImages(recipeDTOBuilder.images);
+        this.setDifficulty(recipeDTOBuilder.difficulty);
     }
 
     public RecipeDTOBuilder createBuilder() {
@@ -159,6 +168,14 @@ public class RecipeDTO {
         this.ingredientDTOS = ingredientDTOS;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -173,12 +190,14 @@ public class RecipeDTO {
                 Objects.equals(url, recipeDTO.url) &&
                 Objects.equals(directions, recipeDTO.directions) &&
                 Arrays.equals(images, recipeDTO.images) &&
-                Objects.equals(notesDTO, recipeDTO.notesDTO);
+                difficulty == recipeDTO.difficulty &&
+                Objects.equals(notesDTO, recipeDTO.notesDTO) &&
+                Objects.equals(ingredientDTOS, recipeDTO.ingredientDTOS);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, description, prepTime, cookTime, servings, source, url, directions, notesDTO);
+        int result = Objects.hash(id, description, prepTime, cookTime, servings, source, url, directions, difficulty, notesDTO, ingredientDTOS);
         result = 31 * result + Arrays.hashCode(images);
         return result;
     }
@@ -201,6 +220,8 @@ public class RecipeDTO {
         private String directions;
 
         private Byte[] images;
+
+        private Difficulty difficulty;
 
         public RecipeDTOBuilder() {
         }
@@ -247,6 +268,11 @@ public class RecipeDTO {
 
         public RecipeDTOBuilder images(Byte[] images) {
             this.images = images;
+            return this;
+        }
+
+        public RecipeDTOBuilder difficulty(Difficulty difficulty) {
+            this.difficulty = difficulty;
             return this;
         }
 

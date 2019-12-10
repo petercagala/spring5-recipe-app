@@ -10,7 +10,7 @@ public class UnitOfMeasureDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "UNIT_OF_MEASURE")
+    @Column(name = "UNIT_OF_MEASURE_DESCRIPTION")
     private String unitOfMeasureDescription;
 
     public UnitOfMeasureDTO() {
